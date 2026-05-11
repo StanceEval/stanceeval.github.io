@@ -595,6 +595,12 @@
     .platform-info h3 { font-size: 1.2rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
     .platform-info p  { font-size: 0.88rem; color: var(--muted); max-width: 580px; line-height: 1.65; }
 
+    /* ── FOLDABLE TABLE ───────────────────────────────── */
+    details summary::-webkit-details-marker { display: none; }
+    details[open] .summary-arrow { transform: rotate(90deg); display: inline-block; transition: transform 0.2s; }
+    .summary-arrow { display: inline-block; transition: transform 0.2s; }
+    details summary:hover { color: var(--teal-lt); }
+
     /* ── REGISTER BANNER ─────────────────────────────── */
     .register-banner {
       background: linear-gradient(135deg, var(--teal) 0%, #0891b2 100%);
@@ -750,34 +756,17 @@
       </h1>
 
       <p class="hero-sub">
-        The StanceEval-2026 shared task — classifying Favor, Against &amp; None
-        across seen and unseen targets in Arabic social media text.
+        StanceEval-2026 is a shared task on stance detection in Arabic social media.
+        Given a tweet and a target, systems must determine whether the writer's stance
+        is <em>Favor</em>, <em>Against</em>, or <em>None</em> — across both seen and unseen targets,
+        using the multi-label Mawqif-v2 dataset.
       </p>
 
-      <div class="hero-stats">
-        <div class="stat-item">
-          <span class="stat-num">5,117</span>
-          <span class="stat-lbl">Tweets</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-num">6</span>
-          <span class="stat-lbl">Targets</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-num">2</span>
-          <span class="stat-lbl">Tracks</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-num">$1,600</span>
-          <span class="stat-lbl">Prizes</span>
-        </div>
-      </div>
-
       <div class="hero-actions">
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSe1vEiuZb9BgmnBCywrjAl56VkAcASvxprpMoufsiiIOP3ZIQ/viewform?usp=publish-editor" target="_blank" class="btn btn-primary btn-register">
+        <a href="#task" class="btn btn-primary">View Tracks →</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSe1vEiuZb9BgmnBCywrjAl56VkAcASvxprpMoufsiiIOP3ZIQ/viewform?usp=publish-editor" target="_blank" class="btn btn-register">
           ✍️ Register Now
         </a>
-        <a href="#timeline" class="btn btn-outline">Key Dates</a>
       </div>
     </div>
   </div>
@@ -802,23 +791,6 @@
         <span class="stance-pill none">— None / Neutral</span>
       </div>
 
-      <div class="cards-3 mt-4">
-        <div class="card fade-in">
-          <div class="card-icon">🌐</div>
-          <h3>Multi-Label Annotations</h3>
-          <p>Each tweet carries stance, sentiment, and sarcasm labels — enabling rich multi-task learning and deeper analysis of user perspectives.</p>
-        </div>
-        <div class="card fade-in">
-          <div class="card-icon">🔀</div>
-          <h3>Seen & Unseen Targets</h3>
-          <p>Two evaluation tracks test in-domain classification and zero-shot generalization to topics the model has never encountered.</p>
-        </div>
-        <div class="card fade-in">
-          <div class="card-icon">📈</div>
-          <h3>Building on StanceEval-2024</h3>
-          <p>The previous edition attracted ~30 competing teams at ArabicNLP 2024. StanceEval-2026 extends the dataset and raises the bar.</p>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -850,12 +822,6 @@
           <div class="track-num">Track 2</div>
           <h3>Unseen Targets</h3>
           <p>Models are evaluated on entirely new topics — testing zero-shot generalization beyond targets seen during training.</p>
-          <div class="track-targets">
-            <span class="tag unseen">Trimester System</span>
-            <span class="tag unseen">E-Cars</span>
-            <span class="tag unseen">Women Driving*</span>
-          </div>
-          <p class="mt-2" style="font-size:0.76rem; color:var(--muted-lt);">* Thematically related to Women Empowerment; also tests target-dependent generalization.</p>
         </div>
       </div>
     </div>
@@ -875,7 +841,11 @@
         </p>
       </div>
 
-      <div class="table-wrap fade-in">
+      <details class="fade-in" style="margin-top:0;">
+        <summary style="cursor:pointer; font-size:0.9rem; font-weight:600; color:var(--teal); padding:0.8rem 0; list-style:none; display:flex; align-items:center; gap:0.5rem; user-select:none;">
+          <span class="summary-arrow">▶</span> View Dataset Statistics
+        </summary>
+        <div class="table-wrap" style="margin-top:0.8rem;">
         <table>
           <thead>
             <tr>
@@ -912,15 +882,15 @@
             </tr>
             <tr>
               <td rowspan="3" class="td-target">Test</td>
-              <td class="td-target">Trimester System</td><td><span class="td-badge unseen">Unseen</span></td>
+              <td class="td-target">Target 1</td><td><span class="td-badge unseen">Unseen</span></td>
               <td class="td-mono">312</td><td>22.12</td><td>72.44</td><td>5.45</td>
             </tr>
             <tr>
-              <td class="td-target">E-Cars</td><td><span class="td-badge unseen">Unseen</span></td>
+              <td class="td-target">Target 2</td><td><span class="td-badge unseen">Unseen</span></td>
               <td class="td-mono">332</td><td>43.67</td><td>35.24</td><td>21.08</td>
             </tr>
             <tr>
-              <td class="td-target">Women Driving</td><td><span class="td-badge unseen">Unseen</span></td>
+              <td class="td-target">Target 3</td><td><span class="td-badge unseen">Unseen</span></td>
               <td class="td-mono">352</td><td>44.89</td><td>45.45</td><td>9.66</td>
             </tr>
             <tr style="background:#f8fffe;">
@@ -931,7 +901,8 @@
             </tr>
           </tbody>
         </table>
-      </div>
+        </div>
+      </details>
     </div>
   </section>
 
@@ -955,85 +926,6 @@
       </div>
       <p style="font-size:0.87rem; color:var(--muted);" class="fade-in">
         The evaluation script — previously used in StanceEval-2024 — will be published alongside the baseline code to help participants build on the existing implementation.
-      </p>
-    </div>
-  </section>
-
-  <!-- RESULTS -->
-  <section id="results">
-    <div class="container">
-      <div class="section-header fade-in">
-        <span class="section-tag">Pilot Benchmarks</span>
-        <h2 class="section-title">Baseline <span class="teal">Results</span> (Favg2)</h2>
-        <div class="divider"></div>
-        <p class="section-lead">
-          We benchmarked Arabic BERT models, multilingual models, and zero-shot LLMs at 70B+ scale. Qwen 2.5 (72B) achieved the highest overall performance.
-        </p>
-      </div>
-
-      <div class="table-wrap fade-in">
-        <table>
-          <thead>
-            <tr>
-              <th>Model</th><th>Type</th>
-              <th>Dev Overall</th><th>EC</th><th>TR</th><th>WD</th><th>Test Overall</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="td-target">CAMeLBERT-da</td>
-              <td><span style="font-size:0.75rem;color:var(--teal);font-weight:600;">Arabic BERT</span></td>
-              <td class="td-mono">77.77</td><td class="td-mono">60.80</td><td class="td-mono">54.70</td><td class="td-mono">60.20</td><td class="td-mono">62.49</td>
-            </tr>
-            <tr>
-              <td class="td-target">MARBERT</td>
-              <td><span style="font-size:0.75rem;color:var(--teal);font-weight:600;">Arabic BERT</span></td>
-              <td class="td-mono">81.91</td><td class="td-mono">61.56</td><td class="td-mono">67.99</td><td class="td-mono">64.53</td><td class="td-mono">65.64</td>
-            </tr>
-            <tr>
-              <td class="td-target">AraBERT-v02</td>
-              <td><span style="font-size:0.75rem;color:var(--teal);font-weight:600;">Arabic BERT</span></td>
-              <td class="td-mono">82.14</td><td class="td-mono">58.70</td><td class="td-mono">63.18</td><td class="td-mono">65.92</td><td class="td-mono">63.23</td>
-            </tr>
-            <tr>
-              <td class="td-target">AraBERT-twitter</td>
-              <td><span style="font-size:0.75rem;color:var(--teal);font-weight:600;">Arabic BERT</span></td>
-              <td class="td-mono">83.90</td><td class="td-mono">60.19</td><td class="td-mono">61.01</td><td class="td-mono">64.84</td><td class="td-mono">62.42</td>
-            </tr>
-            <tr>
-              <td class="td-target">mBERT</td>
-              <td><span style="font-size:0.75rem;color:var(--indigo);font-weight:600;">Multilingual</span></td>
-              <td class="td-mono">76.11</td><td class="td-mono">58.07</td><td class="td-mono">56.37</td><td class="td-mono">61.69</td><td class="td-mono">59.56</td>
-            </tr>
-            <tr>
-              <td class="td-target">XLM-RoBERTa-base</td>
-              <td><span style="font-size:0.75rem;color:var(--indigo);font-weight:600;">Multilingual</span></td>
-              <td class="td-mono">76.83</td><td class="td-mono">53.66</td><td class="td-mono">46.26</td><td class="td-mono">60.39</td><td class="td-mono">54.21</td>
-            </tr>
-            <tr>
-              <td class="td-target">LLaMA 3.3 (70B)</td>
-              <td><span style="font-size:0.75rem;color:var(--muted);font-weight:600;">LLM (0-shot)</span></td>
-              <td class="td-mono">79.41</td><td class="td-mono">67.40</td><td class="td-mono">61.46</td><td class="td-mono">67.08</td><td class="td-mono">66.94</td>
-            </tr>
-            <tr>
-              <td class="td-target">JAIS (70B)</td>
-              <td><span style="font-size:0.75rem;color:var(--muted);font-weight:600;">LLM (0-shot)</span></td>
-              <td class="td-mono">83.37</td><td class="td-mono">71.26</td><td class="td-mono">69.76</td><td class="td-mono">72.67</td><td class="td-mono">70.73</td>
-            </tr>
-            <tr style="background:#f0fdf4;">
-              <td class="td-target" style="color:var(--favor);font-weight:700;">Qwen 2.5 (72B)</td>
-              <td><span style="font-size:0.75rem;color:var(--muted);font-weight:600;">LLM (0-shot)</span></td>
-              <td class="td-mono" style="color:var(--favor);font-weight:700;">84.25</td>
-              <td class="td-mono" style="color:var(--favor);font-weight:700;">80.60</td>
-              <td class="td-mono" style="color:var(--favor);font-weight:700;">68.44</td>
-              <td class="td-mono" style="color:var(--favor);font-weight:700;">73.66</td>
-              <td class="td-mono" style="color:var(--favor);font-weight:700;">74.24 ★</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p style="font-size:0.79rem; color:var(--muted-lt); margin-top:0.8rem;" class="fade-in">
-        EC = E-Cars · TR = Trimester · WD = Women Driving · ★ Best overall result.
       </p>
     </div>
   </section>
@@ -1104,10 +996,10 @@
   <section id="prizes">
     <div class="container">
       <div class="section-header fade-in">
-        <span class="section-tag">Incentives</span>
+        <span class="section-tag">Prizes</span>
         <h2 class="section-title">Prize <span class="teal">Pool</span></h2>
         <div class="divider"></div>
-        <p class="section-lead">$1,600 in total prize funding across both tracks — $800 per track — distributed to the top three finishers.</p>
+        <p class="section-lead">$1,600 in total prizes across both tracks — $800 per track — distributed to the top three winners.</p>
       </div>
 
       <div class="prizes-grid">
@@ -1180,28 +1072,28 @@
           <div class="org-avatar">NA</div>
           <div class="org-info">
             <h4>Nuha Albadi</h4>
-            <p>Assistant Professor, ICS, KFUPM &amp; Research Fellow, SDAIA-KFUPM JRC for AI.</p>
+            <p>Assistant Professor, KFUPM &amp; Research Fellow, SDAIA-KFUPM JRC for AI.</p>
           </div>
         </div>
         <div class="org-card fade-in">
           <div class="org-avatar">HL</div>
           <div class="org-info">
             <h4>Hamzah Luqman</h4>
-            <p>Associate Professor, ICS, KFUPM &amp; Fellow, SDAIA-KFUPM JRC.</p>
+            <p>Associate Professor, KFUPM &amp; Fellow, SDAIA-KFUPM JRC.</p>
           </div>
         </div>
         <div class="org-card fade-in">
           <div class="org-avatar">SE</div>
           <div class="org-info">
             <h4>Saad Ezzini</h4>
-            <p>Assistant Professor ICS, KFUPM. </p>
+            <p>Assistant Professor, KFUPM. Associate Editor, NLP Journal.</p>
           </div>
         </div>
         <div class="org-card fade-in">
           <div class="org-avatar">MK</div>
           <div class="org-info">
             <h4>Maram Kurdi</h4>
-            <p>Assistant Professor, ICS, KFUPM.</p>
+            <p>Assistant Professor, KFUPM.</p>
           </div>
         </div>
         <div class="org-card fade-in" style="border-color:rgba(13,148,136,0.3);">
@@ -1257,7 +1149,6 @@
   <footer>
     <div class="footer-logo">StanceEval<span>-2026</span></div>
     <p>Arabic Stance Detection Shared Task · ArabicNLP 2026 @ EMNLP, Budapest, Hungary</p>
-
     <div class="footer-links">
       <a href="#overview">Overview</a>
       <a href="#task">Task</a>
