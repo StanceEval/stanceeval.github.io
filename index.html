@@ -697,6 +697,27 @@
     footer a { color: var(--teal-lt); text-decoration: none; }
     footer a:hover { text-decoration: underline; }
 
+    .footer-logos {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      margin: 1.5rem auto 0.5rem;
+    }
+
+    .footer-img {
+      height: 128px;
+      width: auto;
+      mix-blend-mode: multiply;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+
+    .footer-img-wide { height: 64px; }
+
+    .footer-img:hover { opacity: 1; }
+
     .footer-links {
       display: flex; gap: 1.5rem; justify-content: center;
       margin-top: 1.2rem; flex-wrap: wrap;
@@ -990,8 +1011,16 @@
         <strong>Favg3</strong> = macro-avg F1 over all three classes
       </div>
       <p style="font-size:0.87rem; color:var(--muted);" class="fade-in">
-        The evaluation script — previously used in StanceEval-2024 — will be published alongside the baseline code to help participants build on the existing implementation.
+        The evaluation script is available below alongside the baseline code to help participants build on the existing implementation.
       </p>
+      <div class="flex flex-wrap gap-sm fade-in" style="margin-top:1.2rem;">
+        <a href="https://github.com/StanceEval/stanceeval.github.io/blob/main/Evaluation_script.ipynb" target="_blank" class="btn btn-outline" style="font-size:0.85rem;">
+          📊 Evaluation Script ↗
+        </a>
+        <a href="https://github.com/StanceEval/stanceeval.github.io/blob/main/StanceEval2026_Baseline_Code.ipynb" target="_blank" class="btn btn-outline" style="font-size:0.85rem;">
+          💻 Baseline Code ↗
+        </a>
+      </div>
     </div>
   </section>
 
@@ -1146,12 +1175,18 @@
         Visit StanceEval-2024 ↗
       </a>
     </div>
+    <div class="footer-logos">
+      <img src="img/kfupm-logo.png" alt="KFUPM" class="footer-img" />
+      <img src="img/jrcai-logo.png" alt="JRCAI – Joint Research Center for AI" class="footer-img footer-img-wide" />
+    </div>
+
   </div>
 
   <!-- FOOTER -->
   <footer>
     <div class="footer-logo">StanceEval<span>-2026</span></div>
     <p>Arabic Stance Detection Shared Task · ArabicNLP 2026 @ EMNLP, Budapest, Hungary</p>
+
     <div class="footer-links">
       <a href="#overview">Overview</a>
       <a href="#task">Task</a>
