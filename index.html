@@ -390,6 +390,30 @@
 
     .track-targets { display: flex; gap: 0.45rem; flex-wrap: wrap; margin-top: 1.2rem; }
 
+    .track-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      margin-top: 1.4rem;
+      font-size: 0.82rem; font-weight: 600;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-teal);
+      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+    }
+
+    .track-card.track-1 .track-link {
+      color: var(--teal);
+      background: var(--teal-dim);
+    }
+
+    .track-card.track-2 .track-link {
+      color: var(--indigo);
+      background: var(--indigo-dim);
+      border-color: rgba(79,70,229,0.2);
+    }
+
+    .track-link:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+
     .tag {
       font-size: 0.73rem; font-weight: 500;
       padding: 0.25rem 0.65rem;
@@ -838,11 +862,17 @@
             <span class="tag seen">Digital Transformation</span>
             <span class="tag seen">Women Empowerment</span>
           </div>
+          <a href="https://www.codabench.org/competitions/16332/" target="_blank" class="track-link">
+            🏆 Submit on Codabench ↗
+          </a>
         </div>
         <div class="track-card track-2 fade-in">
           <div class="track-num">Track 2</div>
           <h3>Unseen Targets</h3>
           <p>Models are evaluated on entirely new topics — testing zero-shot generalization beyond targets seen during training.</p>
+          <a href="https://www.codabench.org/competitions/16333/" target="_blank" class="track-link">
+            🏆 Submit on Codabench ↗
+          </a>
         </div>
       </div>
     </div>
@@ -1011,14 +1041,11 @@
         <strong>Favg3</strong> = macro-avg F1 over all three classes
       </div>
       <p style="font-size:0.87rem; color:var(--muted);" class="fade-in">
-        The evaluation script is available below alongside the baseline code to help participants build on the existing implementation.
+        The evaluation script is available below to help participants build on the existing implementation.
       </p>
       <div class="flex flex-wrap gap-sm fade-in" style="margin-top:1.2rem;">
-        <a href="https://github.com/StanceEval/stanceeval.github.io/blob/main/evaluate.py" target="_blank" class="btn btn-outline" style="font-size:0.85rem;">
+        <a href="https://github.com/StanceEval/stanceeval.github.io/tree/main/Evaluation%20Script" target="_blank" class="btn btn-outline" style="font-size:0.85rem;">
           📊 Evaluation Script ↗
-        </a>
-        <a href="https://github.com/StanceEval/stanceeval.github.io/blob/main/StanceEval2026_Baseline_Code.ipynb" target="_blank" class="btn btn-outline" style="font-size:0.85rem;">
-          💻 Baseline Code ↗
         </a>
       </div>
     </div>
