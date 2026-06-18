@@ -10,9 +10,9 @@ LABEL2ID = {"Against": 0, "Favor": 1, "None": 2}
 
 def find_file(folder, extensions):
     for root, _, files in os.walk(folder):
-        for f in files:
-            if f.lower().endswith(extensions):
-                return os.path.join(root, f)
+        for filename in files:
+            if filename.lower().endswith(extensions):
+                return os.path.join(root, filename)
     return None
 
 
@@ -28,6 +28,7 @@ def safe_name(name):
 
 def load_gold(ref_dir):
     gold_path = find_file(ref_dir, (".csv",))
+
     if gold_path is None:
         raise FileNotFoundError("No gold CSV file found in reference folder.")
 
@@ -50,10 +51,16 @@ def load_gold(ref_dir):
 
 
 def load_predictions(res_dir):
-    zip_path = find_file(res_dir, (".zip",))
+    if os.path.isfile(res_dir) and res_dir.lower().endswith(".zip"):
+        zip_path = res_dir
+    else:
+        zip_path = find_file(res_dir, (".zip",))
 
     if zip_path:
-        extract_dir = os.path.join(res_dir, "extracted_submission")
+        extract_dir = os.path.join(
+            os.path.dirname(zip_path),
+            "extracted_submission"
+        )
         os.makedirs(extract_dir, exist_ok=True)
 
         with zipfile.ZipFile(zip_path, "r") as z:
@@ -64,7 +71,9 @@ def load_predictions(res_dir):
         pred_path = find_file(res_dir, (".txt",))
 
     if pred_path is None:
-        raise FileNotFoundError("No prediction TXT file found.")
+        raise FileNotFoundError(
+            f"No prediction TXT file found in: {res_dir}"
+        )
 
     with open(pred_path, "r", encoding="utf-8") as f:
         preds = [line.strip() for line in f if line.strip() != ""]
@@ -80,15 +89,32 @@ def load_predictions(res_dir):
 
 
 def compute_metrics(gold_labels, pred_labels):
-    y_true = [LABEL2ID[x] for x in gold_labels]
-    y_pred = [LABEL2ID[x] for x in pred_labels]
+    y_true = [LABEL2ID[label] for label in gold_labels]
+    y_pred = [LABEL2ID[label] for label in pred_labels]
 
-    f_against = f1_score(y_true, y_pred, labels=[0], average="macro")
-    f_favor = f1_score(y_true, y_pred, labels=[1], average="macro")
-    f_none = f1_score(y_true, y_pred, labels=[2], average="macro")
+    f_against = f1_score(
+        y_true,
+        y_pred,
+        labels=[0],
+        average="macro"
+    )
 
-    favg2 = (f_favor + f_against) / 2.0
-    favg3 = (f_favor + f_against + f_none) / 3.0
+    f_favor = f1_score(
+        y_true,
+        y_pred,
+        labels=[1],
+        average="macro"
+    )
+
+    f_none = f1_score(
+        y_true,
+        y_pred,
+        labels=[2],
+        average="macro"
+    )
+
+    favg2 = (f_against + f_favor) / 2.0
+    favg3 = (f_against + f_favor + f_none) / 3.0
     acc = accuracy_score(y_true, y_pred)
 
     return {
@@ -112,36 +138,50 @@ def main():
 
     if len(preds) != len(gold_df):
         raise ValueError(
-            f"Length mismatch: expected {len(gold_df)} predictions, got {len(preds)}."
+            f"Length mismatch: expected {len(gold_df)} predictions, "
+            f"got {len(preds)}."
         )
 
     gold_df["pred"] = preds
 
-    overall_metrics = compute_metrics(
-        gold_df["stance"].tolist(),
-        gold_df["pred"].tolist()
-    )
-
     scores_path = os.path.join(output_dir, "scores.txt")
 
     with open(scores_path, "w", encoding="utf-8") as f:
+
         for target in sorted(gold_df["target"].unique()):
             sub = gold_df[gold_df["target"] == target]
 
-            m = compute_metrics(
+            metrics = compute_metrics(
                 sub["stance"].tolist(),
                 sub["pred"].tolist()
             )
 
             target_name = safe_name(target)
 
-            f.write(f"{target_name}_Favg2={m['Favg2']:.6f}\n")
-            f.write(f"{target_name}_Favg3={m['Favg3']:.6f}\n")
-            f.write(f"{target_name}_Accuracy={m['Accuracy']:.6f}\n")
+            lines = [
+                f"{target_name}_Favg2={metrics['Favg2']:.6f}",
+                f"{target_name}_Favg3={metrics['Favg3']:.6f}",
+                f"{target_name}_Accuracy={metrics['Accuracy']:.6f}",
+            ]
 
-        f.write(f"Overall_Favg2={overall_metrics['Favg2']:.6f}\n")
-        f.write(f"Overall_Favg3={overall_metrics['Favg3']:.6f}\n")
-        f.write(f"Overall_Accuracy={overall_metrics['Accuracy']:.6f}\n")
+            for line in lines:
+                f.write(line + "\n")
+                print(line)
+
+        overall = compute_metrics(
+            gold_df["stance"].tolist(),
+            gold_df["pred"].tolist()
+        )
+
+        overall_lines = [
+            f"Dev_Unseen_Overall_Favg2={overall['Favg2']:.6f}",
+            f"Dev_Unseen_Overall_Favg3={overall['Favg3']:.6f}",
+            f"Dev_Unseen_Overall_Accuracy={overall['Accuracy']:.6f}",
+        ]
+
+        for line in overall_lines:
+            f.write(line + "\n")
+            print(line)
 
 
 if __name__ == "__main__":
